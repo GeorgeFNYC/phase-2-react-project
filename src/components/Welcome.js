@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 function Welcome(){
-    const history = useHistory()
+    const history = useNavigate()
     const [dataUser, setDataUser] = useState([])
     const [user, setUser] = useState({
         username: "",
@@ -23,7 +23,7 @@ function Welcome(){
         e.preventDefault();
         dataUser.forEach(data => {
             if(user.username === data.username){
-                history.push("/home")
+                history("/home")
             }
         })
     }

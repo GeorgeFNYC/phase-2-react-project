@@ -1,9 +1,12 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 
 function ArtistList({results}){
     // function selectArtist(e) {
     //     console.log(id)
     //   }
+    const navigate = useNavigate()
+
     return (<div>
         {results.map((result, index) => { 
             return (
@@ -11,7 +14,8 @@ function ArtistList({results}){
                 key={result.id} 
                 id={result.id} 
                 result={result} 
-                onClick={e => {console.log(index)}}
+                onClick={() => {navigate(`/artist/${result.name}`, {state: {result}})}}
+                style={{color: "white"}}
                 >
                     {/* <img alt="" src={result.images[2].url}/> */}
                     {result.name} 

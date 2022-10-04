@@ -1,8 +1,12 @@
 function Search({search, setSearch}){
     return (
-        <div>
-            <input id="homeSearch" type="text" value={search} onChange={setSearch}></input>
-        </div>
+        <nav className="searchComponent">
+
+            <input id="homeSearch" placeholder="Search here..." type="text" required value={search} onChange={setSearch}>
+
+            </input>
+            {/* <a href="google.com">My Fav</a> */}
+        </nav>
     )
 }
 
