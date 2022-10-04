@@ -1,0 +1,82 @@
+.container-fluid .container {
+  padding: 0 !important;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url('../images/backgroundImage.jpg'); 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100vh;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/******************* WELCOME COMPONENT STYLING  *************************/
+.loginDiv {
+  height: 100vh;
+  background-color: #182126;
+}
+.welcomeHeader {
+  font-size: 3.5em;
+  text-align: center;
+  color: #F4F4F4;
+  width: 70%;
+  margin: auto;
+}
+.login {
+  width: 80%;
+  margin: 175px auto;
+}
+.loginHome {
+  border: none;
+  border-bottom: 2px solid #9C3526;
+  background-color: #182126;
+  color: #F4F4F4;
+  width: 90%;
+  font-size: 1.4em;
+  margin: 40px;
+}
+textarea:focus, input:focus{
+  outline: none;
+}
+.btnDiv {
+  margin-left: 200px;
+  margin-top: 20px;
+}
+.button {
+  background-color: #9C3526;
+  border: none;
+  color: #F4F4F4;
+  cursor: pointer;
+  font-size: 1.5em;
+  padding: 10px 20px;
+  border-radius: 15px;
+  text-align: center;
+  width: 100%;
+  outline: none;
+}
+.button:hover {
+  background-color: #F4F4F4;
+  color:  #9C3526;
+}
+
+/*****************************  HOME COMPONENT STYLING  ***********************************/
+
+.homeBG {
+  backdrop-filter: brightness(0.4);
+  background-image: url('../images/backgroundImage.jpg'); 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100vh;
+}
