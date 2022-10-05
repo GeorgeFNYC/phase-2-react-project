@@ -1,20 +1,19 @@
-import React from 'react'
+import React, {useRef} from 'react'
 
-function GenreList({genres}){
-    console.log(genres)
-    // The Fisher-Yates Algorithm to randomize the Genres array for every render
-    for(let i = genres.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1))
-        const temp = genres[i]
-        genres[i] = genres[j]
-        genres[j] = temp
-    }
+function GenreList({genres, handleClick, handleRandom}){
+    const ref = useRef()
+    
     return (
-        <div> 
-            {genres?.slice(0,7).map((genre, index) => {
-            return <div key={index} style={{color:"white"}}>{genre.name}</div>
-        })}
-        </div>
+    <>
+     <button className="randomButton" onClick={handleRandom}>{'\u293E'}</button>
+     {genres.slice(0,10).map((genre,index) => {
+            return (
+                <div key={index} className={`col-md-2 bubble0`} onClick={handleClick}>
+                    <p ref={ref} className="genreList">{genre}</p>
+                </div>
+            )
+        })} 
+    </>
     )
 }
 

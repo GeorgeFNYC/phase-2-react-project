@@ -1,25 +1,29 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 
-function ArtistList({results}){
-    // function selectArtist(e) {
-    //     console.log(id)
-    //   }
+function ArtistList({results, handleClick}){
     const navigate = useNavigate()
 
-    return (<div>
+    // const handleHide = () => {
+    //     results('')
+    // }
+
+    return (<div onClick={handleClick} id='searchDrop'>
         {results.map((result, index) => { 
             return (
-                <li 
+                <div 
+                onClick={() => {navigate(`/artist/${result.id}`, {state: {result}})}} 
                 key={result.id} 
-                id={result.id} 
-                result={result} 
-                onClick={() => {navigate(`/artist/${result.name}`, {state: {result}})}}
-                style={{color: "white"}}
+                className='artistLinks'
                 >
-                    {/* <img alt="" src={result.images[2].url}/> */}
-                    {result.name} 
-                </li>
+                    <span
+                    key={result.id} 
+                    id={result.id} 
+                    result={result} 
+                    >
+                        {result.name} 
+                    </span>
+                </div>
             )
         })}
     </div>)

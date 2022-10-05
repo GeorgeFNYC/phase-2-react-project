@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import Search from './Search'
 import ArtistList from './ArtistList';
 
-function NavBar({search, setSearch, results}){
+function NavBar({search, setSearch, results, handleClick}){
     return (
         <div className='navBar'>
             <Search search={search} setSearch={setSearch}/>
@@ -17,8 +17,8 @@ function NavBar({search, setSearch, results}){
                 >
                 My favorites
             </NavLink>
-            <h4 id="userInfo">Username</h4>
-            <ArtistList results={results}/>
+            <h2 id="userInfo">Username</h2>
+            <ArtistList results={results} handleClick={handleClick}/>
         </div>
     )
 }

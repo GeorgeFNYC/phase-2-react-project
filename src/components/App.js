@@ -1,37 +1,23 @@
-// import logo from './logo.svg';
-// import './App.css';
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Home from './Home';
 import Welcome from './Welcome'
 import ArtistInfo from './ArtistInfo';
 import NavBar from './NavBar'
+import Favorites from './Favorites';
+import Genres from './Genres';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
 
 function App() {
+  const navigate = useNavigate()
   const location = useLocation();
   console.log(location.pathname)
 
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
-  const [genres, setGenres] = useState([]);
   const [results, setResults] = useState([])
-  
-  const getGenres = async () => {
-    let req = await fetch("https://api.spotify.com/v1/recommendations/available-genre-seeds",{
-        method: "GET",
-        headers: {
-          "Accept" : "application/json",
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + accessToken,
-        },
-      }
-    )
-    let res = await req.json()
-    setGenres(res.categories.items)
-  }
   useEffect(() => {
     var authParameters = {
       method: "POST",
@@ -49,8 +35,6 @@ function App() {
     .then((data) => {
       setAccessToken(data.access_token)
     })
-    
-    getGenres();
   }, [])
 
 
@@ -70,6 +54,21 @@ function App() {
         setResults(data.artists.items)
         // setResults(data.tracks.items)
       });
+      
+  }
+
+  function displayGenreArtist(e){
+    const genreList = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + accessToken,
+      },
+    };
+    fetch(`https://api.spotify.com/v1/recommendations?limit=8&market=US&seed_genres=${e.target.innerText}`, genreList)
+    .then(res => res.json())
+    .then(data => console.log(data.tracks))
+    navigate(`/genre/${e.target.innerText}`)
   }
 
   const displayResults = results.filter(result => {
@@ -80,19 +79,25 @@ function App() {
     }
   })
 
+  const handleHide = () => {
+    setSearchInput('')
+}
 
   return (
-    <div  className="homeContainer">
-      {location.pathname === "/" ?  null : <NavBar search={searchInput} setSearch={searchArtists} results={displayResults}/>}
+    <>
+      {location.pathname === "/" ?  null : <NavBar search={searchInput} setSearch={searchArtists} results={displayResults} handleClick={handleHide}/>}
       <Routes>
-        <Route exact path="/home" element={<Home genres={genres}/>}>
+        <Route exact path="/home" element={<Home token={accessToken} handleClick={displayGenreArtist}/>}>
         </Route>
         <Route exact path="/" element={<Welcome />}>
         </Route>
-        <Route path="/artist/:id" element={<ArtistInfo />}>
+        <Route exact path="/artist/:id" element={<ArtistInfo token={accessToken}/>}>
+        </Route>
+        <Route exact path="/genre/:id" element={<Genres token={accessToken}/>}></Route>
+        <Route exact path="/favorites" element={<Favorites />}>
         </Route>
       </Routes>
-    </div>
+    </>
   );
 }
 
