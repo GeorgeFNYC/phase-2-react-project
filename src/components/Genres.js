@@ -25,18 +25,22 @@ function Genres({token}){
     }, [token, id, state])
 
     return(
-        <div>{artistByGenre.slice(0,9).map(artist => {
+        <div className='container' style={{marginTop: '150px'}}>
+            {artistByGenre.slice(0,20).map(artist => {
             return (
-                <div key={artist.id} >
-                    <img src={artist.images[1].url} alt="artist" />
-                    <p>{artist.name}</p>
+                <div className='col-md-3' key={artist.id} onClick={() => {navigate(`/artist/${artist.id}`, {state: {artist}})}} >
+                    <div className='artistCards'>
+                        <img className="genreArtist" src={artist.images[2].url} alt="artist" />
+                        <p className='artistName'>{artist.name}</p>
+                    </div>
                 </div>
-            )
-        })}</div>
+                ) 
+            })} 
+
+        </div>
     )
 }
 
 export default Genres;
 
-
-//onClick={() => {navigate(`/artist/${artist.id}`, {state: {artist}})}}
+// onClick={() => {navigate(`/artist/${artist.id}`, {state: {artist}})}}

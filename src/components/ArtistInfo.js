@@ -8,11 +8,11 @@ function ArtistInfo({token}){
     const location = useLocation();
     const state = location.state
 
-    if(state){
-        console.log(state)
-    } else {
-        console.log("hello")
+    if(state === state.result){
+        alert("Hello")
     }
+    console.log(state)
+
     const ref = useRef(null)
 
     const click = () => {
@@ -20,7 +20,6 @@ function ArtistInfo({token}){
     }
 
     useEffect(() => {
-        if(!state){
             const albumsOptions = {
                 method: 'GET',
                 headers: {
@@ -32,11 +31,11 @@ function ArtistInfo({token}){
             fetch(`https://api.spotify.com/v1/artists/${id}/albums?market=US`, albumsOptions)
             .then(res => res.json())
             .then(data => setArtistAlbum(data.items))
-        }
         // fetch(`https://api.seatgeek.com/2/events/?q=${state ? state.result.name : state.artist.name}&client_id=MjkxNzMwOTl8MTY2NDk4MTI0Ny4wNTQ4ODM1`)
         // .then(res => res.json())
         // .then(data => setArtistConcerts(data.events))
     },[token, id, state])    
+    console.log(artistAlbum)
 
     return (
         <div className="container ">
