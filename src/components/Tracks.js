@@ -43,18 +43,21 @@ function Tracks({ token }) {
         .then(res => res.json())
         .then(data => setAlbumTracks(data.items))
     },[id, token])
-
   return (
-    <div>{albumTracks.map(track => {
+    <div className='container'>
+    {albumTracks.map(track => {
         return <li key={track.id} style={{color:"white"}} onClick={() => {
             const userDoc = doc(db, "users", id)
             console.log(userDoc)
             updateDoc(userDoc, {
                 favorites : arrayUnion("Hello")
             });
+            
         }}>{track.name}</li>
+        
     })}</div>
   )
+  
 }
 
 export default Tracks

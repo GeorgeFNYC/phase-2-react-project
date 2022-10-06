@@ -50,8 +50,8 @@ textarea:focus, input:focus{
   outline: none;
 }
 .btnDiv {
-  margin-left: 200px;
-  margin-top: 20px;
+  position: relative;
+  margin-top: 25px;
 }
 .button {
   background-color: #9C3526;
@@ -62,8 +62,10 @@ textarea:focus, input:focus{
   padding: 10px 20px;
   border-radius: 15px;
   text-align: center;
-  width: 100%;
+  width: 50%;
   outline: none;
+  position: absolute;
+  left: 25%;
 }
 .button:hover {
   background-color: #F4F4F4;
@@ -351,7 +353,7 @@ scrollbar-width: none;  /* Firefox */
   font-size: 1.2em;
 } */
 
-#tourBtn {
+.scrollBtn {
   background-image: linear-gradient(
     to right,
     #9C3526,
@@ -370,7 +372,7 @@ scrollbar-width: none;  /* Firefox */
   cursor: pointer;
 }
 
-#tourBtn:before {
+.scrollBtn:before {
   content: '';
   background: #9C3526;
   display: block;
@@ -382,11 +384,11 @@ scrollbar-width: none;  /* Firefox */
   transition: all 0.3s ease-in-out;
 }
 
-#tourBtn:hover {
+.scrollBtn:hover {
  background-position: 0;
 }
 
-#tourBtn:hover::before {
+.scrollBtn:hover::before {
   width:100%;
 }
 
@@ -395,4 +397,48 @@ scrollbar-width: none;  /* Firefox */
   margin-bottom: 25px;
   text-align: center;
   color: #F4F4F4;
+}
+
+#ticketBtn {
+  background-image: linear-gradient(
+    to right,
+    #9C3526,
+    #9C3526 50%,
+    #F4F4F4 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+  display: inline-block;
+  padding: 2px 0;
+  position: relative;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+  font-size: 1.3em;
+  cursor: pointer;
+}
+
+#ticketBtn:before {
+  content: '';
+  background: #9C3526;
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+#ticketBtn:hover {
+ background-position: 0;
+}
+
+#ticketBtn:hover::before {
+  width:100%;
+}
+
+#myLine {
+  width: 60%;
+  border: 1px solid #9C3526;
 }

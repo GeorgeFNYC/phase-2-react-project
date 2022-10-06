@@ -58,7 +58,7 @@ function ArtistInfo({token}){
                     })}
                 </div>
                 <div  style={{textAlign: 'center', marginTop: '5px'}}>
-                    <a ref = {ref} id = 'tourBtn' onClick={click}>
+                    <a ref = {ref} className = 'scrollBtn' onClick={click}>
                         {`See if ${!state.result ? state.artist.name : state.result.name} is touring now`}
                         </a>
                     <div><i className="arrow down"></i></div>
@@ -69,9 +69,10 @@ function ArtistInfo({token}){
                     {artistConcerts.map(concert => {
                         return  <div className = 'col-md-4 tourDates' key = { concert.id }>
                                     <h2>{concert.venue.name}</h2>
+                                    <hr id="myLine"/>
                                     <h3>{concert.venue.display_location}</h3>
                                     <h4>{format(new Date(concert.datetime_local), 'yyyy/MM/dd')}</h4>
-                                    <a target='_blank' href={concert.url}>Links</a> 
+                                    <a id = "ticketBtn" target='_blank' href={concert.url}>{'Buy tickets \u2192'}</a> 
                                 </div>
                         //  return <li key={concert.id} style={{color:'white'}}>{concert.short_title}</li>
                     })}

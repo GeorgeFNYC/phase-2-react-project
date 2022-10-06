@@ -11,9 +11,11 @@ import {
 function Welcome(){
     const[userName, setUserName] = useState("")
     const[password, setPassword] = useState("")
+    const[confirmPassword, setConfirmPassword] = useState("")
     const[dbUser, setDbUser] = useState()
     const usersCollectionRef = collection(db, "users");
     const navigate = useNavigate()
+    const[hide, setHide] = useState(false);
     
     // const createUser = async() => {
     //     await addDoc(usersCollectionRef, { name: newName, password: newPassword });
@@ -35,6 +37,10 @@ function Welcome(){
         })
     }
 
+    // const handleSign = () => {
+    //     setHide(!hide)
+    // }
+
     return(
         <div className='container-fluid'>
             <div className='col-lg-6'></div>
@@ -44,8 +50,11 @@ function Welcome(){
                     <form onSubmit={handleSubmit}>
                         <input onChange={(e) => {setUserName(e.target.value)}} name="username"className='loginHome' placeholder='Username' type="text" ></input>
                         <input onChange={(e) => {setPassword(e.target.value)}} name="password"className='loginHome'placeholder='Password' type="password" ></input>
-                        <div className=' btnDiv col-md-3'>
+                        <input style = { {display: 'none'} }onChange={(e) => {setConfirmPassword(e.target.value)}} name="password"className='loginHome'placeholder='Confirm Password' type="password" ></input>
+                        <div className=' btnDiv col-md-6'>
                             <button type="submit" className="button">Login</button>
+                        </div>
+                        <div className='btnDiv col-md-6'>
                             <button type="submit" className="button">Sign up</button>
                         </div>
                     </form>
