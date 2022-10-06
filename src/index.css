@@ -1,7 +1,7 @@
 .container-fluid {
   padding: 0 !important;
 }
-body {
+html, body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -72,7 +72,7 @@ textarea:focus, input:focus{
 
 /*****************************  NavBar COMPONENT STYLING  ***********************************/
 .navBar {
-  margin: 0 50px 15px 50px;
+  margin: 0 50px 0 50px;
   padding-top: 15px;
 }
 .searchComponent {
@@ -82,21 +82,42 @@ textarea:focus, input:focus{
   height: 100vh;
 } */
 .links {
+  background-image: linear-gradient(
+    to right,
+    #9C3526,
+    #9C3526 50%,
+    #F4F4F4 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+  display: inline-block;
+  padding: 2px 0;
+  position: relative;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
   font-size: 1.4em;
-  margin-left: 20px;
-  color: #F4F4F4;
-  box-shadow: inset 0 0 0 0 #9C3526;
-  transition: color .5s ease-in-out, box-shadow .5s ease-in-out;
+  cursor: pointer;
+  margin-left: 30px;
+}
+.links:before {
+  content: '';
+  background: #9C3526;
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.3s ease-in-out;
 }
 
 .links:hover {
-  color: #F4F4F4;
-  box-shadow: inset 200px 0 0 0 #9C3526;
-  text-decoration: none;
+ background-position: 0;
 }
-.links, .links:hover, .links:active, .links:visited, .links:focus {
-  text-decoration:none;
-  color: #F4F4F4; 
+
+.links:hover::before {
+  width:100%;
 }
 
 #homeSearch {
@@ -138,38 +159,57 @@ textarea:focus, input:focus{
 #artistPicDiv {
   width: 100%;
   height: 250px;
+  background-color: black;
   overflow: hidden;
   position: relative;
+  border-radius: 10px;
+  backdrop-filter: blur(100px);
 }
 #artistBanner{
   width: 100%;
   height: auto;
-  position: absolute;
-  top: -176%;
+  position: relative;
+  top: -450px;
+  filter: blur(6px);
+  
 }
 #artistName {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 70%;
+  left: 20%;
   transform: translate(-50%, -50%);
+  font-size: 3em;
+  color: #F4F4F4;
+  text-shadow: 1px 7px 5px #182126
 }
 #artistDisc {
   width: 100%;
   height: 400px;
-  background-color: white;
+  border-radius: 10px;
+  background-color: rgba(24, 33, 38, 0.7);
   margin-top: 30px;
   padding: 25px;
   overflow-y: scroll;
 }
 
-#artistDisc::-webkit-scrollbar-track {
+#artistDisc::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#artistDisc {
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}
+
+/* #artistDisc::-webkit-scrollbar-track {
   border: 1px solid #000;
   padding: 2px 0;
   background-color: #404040;
 }
 
 #artistDisc::-webkit-scrollbar {
-  width: 10px;
+  width: 100px;
 }
 
 #artistDisc::-webkit-scrollbar-thumb {
@@ -177,17 +217,28 @@ textarea:focus, input:focus{
   box-shadow: inset 0 0 6px rgba(0,0,0,.3);
   background-color: #737272;
   border: 1px solid #000;
-}
+} */
 
 .albums {
   margin: 15px;
   height: 150px;
   width: 150px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.8s ease;
 }
+
+.albums:hover{
+  -webkit-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  transform: scale(0.9);
+  transition: 0.8s ease;
+}
+
 
 #concerts {
   height: 100vh;
-  background-color: orange;
+  background-color: rgba(24, 33, 38, 0.7);
   margin-top: 60px;
 }
 
@@ -277,4 +328,71 @@ textarea:focus, input:focus{
   border-radius: 50px;
   margin-right: 5px;
   border: 1px solid #F4F4F4;
+}
+
+
+
+.arrow {
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+/* #tourBtn {
+  text-decoration: none;
+  color: #F4F4F4;
+  cursor: pointer;
+  font-size: 1.2em;
+} */
+
+#tourBtn {
+  background-image: linear-gradient(
+    to right,
+    #9C3526,
+    #9C3526 50%,
+    #F4F4F4 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+  display: inline-block;
+  padding: 2px 0;
+  position: relative;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+#tourBtn:before {
+  content: '';
+  background: #9C3526;
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+#tourBtn:hover {
+ background-position: 0;
+}
+
+#tourBtn:hover::before {
+  width:100%;
+}
+
+
+.tourDates {
+  margin-bottom: 25px;
+  text-align: center;
+  color: #F4F4F4;
 }

@@ -1,23 +1,27 @@
 import React, {useState, useEffect, useRef} from "react"
-import {useLocation, useParams} from 'react-router-dom'
+import {useLocation, useNavigate, useParams, NavLink} from 'react-router-dom'
+import { format } from 'date-fns'
 
 function ArtistInfo({token}){
     const [artistAlbum, setArtistAlbum] = useState([])
     const [artistConcerts, setArtistConcerts] = useState([])
+    const[avail, setAvail] = useState()
     const {id} = useParams()
     const location = useLocation();
     const state = location.state
-
-    if(state === state.result){
-        alert("Hello")
-    }
-    console.log(state)
+    const navigate = useNavigate()
 
     const ref = useRef(null)
 
     const click = () => {
-        ref.current?.scrollIntoView({behavior:"smooth"})
+        if(artistConcerts.length > 0) {
+            ref.current?.scrollIntoView({behavior:"smooth"})
+        }else {
+            // console.log('Nothing')
+            console.log(ref.current.innerText = 'nothing')
+        }
     }
+    console.log(ref)
 
     useEffect(() => {
             const albumsOptions = {
@@ -31,11 +35,11 @@ function ArtistInfo({token}){
             fetch(`https://api.spotify.com/v1/artists/${id}/albums?market=US`, albumsOptions)
             .then(res => res.json())
             .then(data => setArtistAlbum(data.items))
-        // fetch(`https://api.seatgeek.com/2/events/?q=${state ? state.result.name : state.artist.name}&client_id=MjkxNzMwOTl8MTY2NDk4MTI0Ny4wNTQ4ODM1`)
-        // .then(res => res.json())
-        // .then(data => setArtistConcerts(data.events))
+        fetch(`https://api.seatgeek.com/2/events/?q=${state.result ? state.result.name : state.artist.name}&client_id=MjkxNzMwOTl8MTY2NDk4MTI0Ny4wNTQ4ODM1`)
+        .then(res => res.json())
+        .then(data => setArtistConcerts(data.events))
     },[token, id, state])    
-    console.log(artistAlbum)
+    console.log(artistConcerts, 'Hello')
 
     return (
         <div className="container ">
@@ -44,21 +48,32 @@ function ArtistInfo({token}){
             <div className="divArtist">
                 
                 <div id="artistPicDiv">
-                    <img id="artistBanner" src={state ? state.artist.images[0].url : state.result.images[0].url} alt=""/>
-                    <h1 id="artistName"style={{color: "red"}}>{state ? state.artist.name : state.result.name}</h1>
+                    <img id="artistBanner" src={!state.result ? state.artist.images[0].url : state.result.images[0].url} alt=""/>
+                    <h1 id="artistName" >{!state.result ? state.artist.name : state.result.name}</h1>
                 </div>
                 
                 <div id="artistDisc">
                     {artistAlbum.map(album => {
-                        return <img key={album.id} className='albums' src={album.images[1].url} alt="albums" />
+                        return <img onClick= {() => {navigate(`/album/${album.id}`, {state: {album}})}} key={album.id} className='albums' src={album.images[1].url} alt="albums" />
                     })}
                 </div>
-                <div>
-                    <button onClick={click}>Scroll</button>
+                <div  style={{textAlign: 'center', marginTop: '5px'}}>
+                    <a ref = {ref} id = 'tourBtn' onClick={click}>
+                        {`See if ${!state.result ? state.artist.name : state.result.name} is touring now`}
+                        </a>
+                    <div><i className="arrow down"></i></div>
                 </div>
-                <div ref={ref}id="concerts">
+
+
+                <div ref={ref} id="concerts">
                     {artistConcerts.map(concert => {
-                        return <li key={concert.id} style={{color:'white'}}>{concert.short_title}</li>
+                        return  <div className = 'col-md-4 tourDates' key = { concert.id }>
+                                    <h2>{concert.venue.name}</h2>
+                                    <h3>{concert.venue.display_location}</h3>
+                                    <h4>{format(new Date(concert.datetime_local), 'yyyy/MM/dd')}</h4>
+                                    <a target='_blank' href={concert.url}>Links</a> 
+                                </div>
+                        //  return <li key={concert.id} style={{color:'white'}}>{concert.short_title}</li>
                     })}
                 </div>
             </div>

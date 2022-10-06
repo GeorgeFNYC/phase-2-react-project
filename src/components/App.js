@@ -6,6 +6,7 @@ import ArtistInfo from './ArtistInfo';
 import NavBar from './NavBar'
 import Favorites from './Favorites';
 import Genres from './Genres';
+import Tracks from './Tracks';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
@@ -94,6 +95,7 @@ function App() {
         <Route exact path="/artist/:id" element={<ArtistInfo token={accessToken}/>}>
         </Route>
         <Route exact path="/genre/:id" element={<Genres token={accessToken}/>}></Route>
+        <Route exact path="/album/:id" element={<Tracks token={accessToken}/>}></Route>
         <Route exact path="/favorites" element={<Favorites />}>
         </Route>
       </Routes>

@@ -1,38 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
+import { db } from "./firebase-config";
+import {
+  collection,
+  getDocs,
+  addDoc,
+} from "firebase/firestore";
+
 
 function Welcome(){
-    const history = useNavigate()
-    const [dataUser, setDataUser] = useState([])
-    const [user, setUser] = useState({
-        username: "",
-        password:"",
-        favorites: []
-    })
-
+    const[userName, setUserName] = useState("")
+    const[password, setPassword] = useState("")
+    const[dbUser, setDbUser] = useState()
+    const usersCollectionRef = collection(db, "users");
+    const navigate = useNavigate()
+    
+    // const createUser = async() => {
+    //     await addDoc(usersCollectionRef, { name: newName, password: newPassword });
+    // }
+    const getUsers = async () => {
+        const data = await getDocs(usersCollectionRef);
+        setDbUser(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      };
     useEffect(() => {
-        fetch('http://localhost:3000/users')
-        .then(res => res.json())
-        .then(auth => {
-            setDataUser(auth);
-        })
-    }, [])
+        getUsers();
+    }, []);
 
-    console.log(dataUser)
     const handleSubmit = (e) => {
         e.preventDefault();
-        dataUser.forEach(data => {
-            if(user.username === data.username){
-                history("/home")
+        dbUser.forEach(data => {
+            if(userName === data.name && password === data.password){
+                navigate("/home")
             }
-        })
-    }
-
-    const handleChange = (e) => {
-        e.preventDefault();
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value,
         })
     }
 
@@ -43,10 +42,11 @@ function Welcome(){
                 <div className='login'>
                     <h3 className='welcomeHeader'>Listen at home, or in person</h3>
                     <form onSubmit={handleSubmit}>
-                        <input onChange={handleChange}name="username"className='loginHome' placeholder='Username' type="text" ></input>
-                        <input onChange={handleChange}name="password"className='loginHome'placeholder='Password' type="password" ></input>
+                        <input onChange={(e) => {setUserName(e.target.value)}} name="username"className='loginHome' placeholder='Username' type="text" ></input>
+                        <input onChange={(e) => {setPassword(e.target.value)}} name="password"className='loginHome'placeholder='Password' type="password" ></input>
                         <div className=' btnDiv col-md-3'>
                             <button type="submit" className="button">Login</button>
+                            <button type="submit" className="button">Sign up</button>
                         </div>
                     </form>
                 </div>
