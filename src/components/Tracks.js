@@ -8,26 +8,48 @@ import {
   doc,
   arrayUnion,
 } from "firebase/firestore";
+import { set } from 'date-fns';
 
 
-function Tracks({ token }) {
+function Tracks({ token, handleFavorites }) {
     const[albumTracks, setAlbumTracks] = useState([])
-    const[dbUser, setDbUser] = useState([])
+    // const[dbUser, setDbUser] = useState([])
     const {id} = useParams()
     const location = useLocation();
     const state = location.state
-    const usersCollectionRef = collection(db, "users");
+    // const usersCollectionRef = collection(db, "users");
 
+    async function getTrack (e) {
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': '68d338d4e4msh2a64b1c1240872ep17cf20jsn3b7150a8899a',
+          'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
+        }
+      };
+      
+      await fetch(`https://deezerdevs-deezer.p.rapidapi.com/search?q=${e.target.innerText}`, options)
+        .then(response => response.json())
+        .then(response => {
+          const example = response.data.find(track=>{
+            return track.artist.name === state.album.artists[0].name
 
+          })
+          console.log(example)
+          let audio = new Audio(example.preview)
+          console.log(audio)
+          audio.play()
+        })
+      }
     
-    useEffect(() => {
-        const getUsers = async () => {
-            const data = await getDocs(collection(db, "users"));
-            setDbUser(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-          };
-        getUsers();
-    }, []);
-    console.log(dbUser)
+    
+    // useEffect(() => {
+    //     const getUsers = async () => {
+    //         const data = await getDocs(collection(db, "users"));
+    //         setDbUser(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    //       };
+    //     getUsers();
+    // }, []);
 
 
     useEffect(() => {
@@ -43,30 +65,40 @@ function Tracks({ token }) {
         .then(res => res.json())
         .then(data => setAlbumTracks(data.items))
     },[id, token])
-    console.log(albumTracks)
+    
   return (
-    <div className='container'>
-      <div className='col-md-4'>
-        <img id="trackAlbum" alt="album"src='https://media.pitchfork.com/photos/62ac785ab2cec3cf761512c5/master/w_1280%2Cc_limit/Drake-Honestly-Nevermind.jpg'/>
+    <div className='container trackListContainer'>
+      <div className='col-md-4' style={{width: 'auto'}}>
+        <img id="trackAlbum" alt="album"src={state.album.images[1].url}/>
       </div>
-      <div className='col-md-8'>
-        <h1 id='albumTitle'>Honestly Nevermind</h1>
-        <h2 id='albumArtist'>Drake</h2>
+      <div className='col-md-8' style={{position: 'relative'}}>
+        <h1 id='albumTitle'>{state.album.name}</h1>
+        <h2 id='albumArtist'>{state.album.artists[0].name}</h2>
       </div>
       <div className='col-md-12'>
-        <ol>
+        <ol id='trackListOl'>
     {albumTracks.map(track => {
-        return <li key={track.id} className="artistTracks" onClick={() => {
-            const userDoc = doc(db, "users", id)
-            console.log(userDoc)
-            updateDoc(userDoc, {
-                favorites : arrayUnion("Hello")
-            });
-            
-        }}>{' '}{' '}{track.name}</li>
+        return <li 
+        key={track.id} 
+        className="artistTracks" 
+        onClick={(e) => {
+          getTrack(e)
+        }}
+        onContextMenu={handleFavorites}
+        > {track.name}  
+        <button style={{marginLeft : '20px'}} type="button" class="btn btn-default btn-sm">
+        +
+        </button></li>
         
     })}</ol>
-    
+    </div>
+
+    <div className='col-md-12'>
+      <a className='scrollBtn' style={{ marginLeft: '10px' }}>{`Go back to ${state.album.artists[0].name} albums`}</a>
+    </div>
+    <div className='col-md-12'>
+      {/* <audio controls>
+      </audio> */}
     </div>
     
     </div>

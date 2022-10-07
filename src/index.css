@@ -260,11 +260,11 @@ scrollbar-width: none;  /* Firefox */
 /* .genreBubble {
   height: 100vh;
 } */
-
 .bubbleGenre {
   height: 200px;
   width: 200px;
   background-color: orange;
+  background-image: linear-gradient(to bottom right, #9C3526, #182126);
   margin: 18px;
   border-radius: 100%;
   transition: 0.8s ease;
@@ -280,6 +280,8 @@ scrollbar-width: none;  /* Firefox */
   text-align: center;
   vertical-align: middle;
   line-height: 200px; 
+  font-size: 1.4em;
+  color: #F4F4F4
 }
 
 .randomButton {
@@ -456,10 +458,20 @@ scrollbar-width: none;  /* Firefox */
 }
 
 
+.trackListContainer {
+  background-color: rgb(0, 0, 0, 0.4);
+  height: 94vh;
+  padding-top: 20px;
+}
+
 #trackAlbum {
-  height: 250px;
+  height: 225px;
   width: auto;
   border-radius: 10px;
+}
+#albumTitle {
+  position: relative;
+  top: 92px;
 }
 #albumTitle, #albumArtist {
   color: #F4F4F4;
@@ -467,4 +479,23 @@ scrollbar-width: none;  /* Firefox */
 .artistTracks {
   font-size: 1.3em;
   color: #F4F4F4;
+  line-height: 1.7em;
+  cursor: pointer;
+}
+
+#trackListOl {
+  margin-top: 15px;
+  overflow: scroll;
+  height: 450px;
+}
+
+
+.myFavorites {
+  background-color: #9C3526;
+  padding: 5px;
+  border-radius: 15px;
+  box-shadow: 7px 5px 13px 0px #888888;
+  width: 25%;
+  color: #F4F4F4;
+  margin-bottom: 3px;
 }

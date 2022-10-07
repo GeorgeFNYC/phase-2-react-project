@@ -7,8 +7,9 @@ function Genres({token}){
     const navigate = useNavigate()
     const location = useLocation()
     const state = location.state
+
+    // console.log(state)
     useEffect(() => {
-        if(!state){
             const artistsGenre = {
                 method: 'GET',
                 headers: {
@@ -20,8 +21,7 @@ function Genres({token}){
             fetch(`https://api.spotify.com/v1/search?q=genre:${id}&type=artist`,artistsGenre)
             .then(res => res.json())
             .then(data => setArtistByGenre(data.artists.items))
-        }
-    }, [token, id, state])
+    }, [token, id])
 
     return(
         <div className='container' style={{marginTop: '150px'}}>
@@ -29,7 +29,7 @@ function Genres({token}){
             return (
                 <div className='col-md-3' key={artist.id} onClick={() => {navigate(`/artist/${artist.id}`, {state: {artist}})}} >
                     <div className='artistCards'>
-                        <img className="genreArtist" src={artist.images[2].url} alt="artist" />
+                       {artist.images ? <img className="genreArtist" src={artist.images[2].url} alt="artist" /> : <img className="genreArtist" src='https://www.pngkit.com/png/detail/353-3536328_generic-placeholder-image-question-and-answer-signs.png' alt="artist" />}
                         <p className='artistName'>{artist.name}</p>
                     </div>
                 </div>
@@ -42,4 +42,3 @@ function Genres({token}){
 
 export default Genres;
 
-// onClick={() => {navigate(`/artist/${artist.id}`, {state: {artist}})}}

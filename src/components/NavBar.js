@@ -17,7 +17,7 @@ function NavBar({search, setSearch, results, handleClick}){
                 >
                 My favorites
             </NavLink>
-            <h2 id="userInfo">Username</h2>
+            <h2 id="userInfo">Heather</h2>
             <ArtistList results={results} handleClick={handleClick}/>
         </div>
     )

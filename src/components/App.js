@@ -19,6 +19,8 @@ function App() {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [results, setResults] = useState([])
+  const [favorites, setFavorites] = useState([])
+
   useEffect(() => {
     var authParameters = {
       method: "POST",
@@ -69,7 +71,7 @@ function App() {
     };
     fetch(`https://api.spotify.com/v1/recommendations?limit=8&market=US&seed_genres=${e.target.innerText}`, genreList)
     .then(res => res.json())
-    .then(data => console.log(data.tracks, 'hello'))
+    .then(data => data.tracks)
     navigate(`/genre/${e.target.innerText}`)
   }
 
@@ -85,6 +87,10 @@ function App() {
     setSearchInput('')
 }
 
+  const handleFavorites = (e) => {
+    setFavorites([...favorites, e.target.innerText])
+  }
+
   return (
     <>
       {location.pathname === "/" ?  null : <NavBar search={searchInput} setSearch={searchArtists} results={displayResults} handleClick={handleHide}/>}
@@ -96,9 +102,8 @@ function App() {
         <Route exact path="/artist/:id" element={<ArtistInfo token={accessToken}/>}>
         </Route>
         <Route exact path="/genre/:id" element={<Genres token={accessToken}/>}></Route>
-        <Route exact path="/album/:id" element={<Tracks token={accessToken}/>}></Route>
-        <Route exact path="/favorites" element={<Favorites />}>
-        </Route>
+        <Route exact path="/album/:id" element={<Tracks token={accessToken} handleFavorites={handleFavorites}/>}></Route>
+        <Route exact path="/favorites" element={<Favorites favorites={favorites}/>}></Route>
       </Routes>
     </>
   );
