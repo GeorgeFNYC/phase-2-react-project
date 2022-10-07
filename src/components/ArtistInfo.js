@@ -10,7 +10,6 @@ function ArtistInfo({token}){
     const location = useLocation();
     const state = location.state
     const navigate = useNavigate()
-
     const ref = useRef(null)
 
     const click = () => {
@@ -21,7 +20,6 @@ function ArtistInfo({token}){
             console.log(ref.current.innerText = 'nothing')
         }
     }
-    console.log(ref)
 
     useEffect(() => {
             const albumsOptions = {
@@ -39,7 +37,6 @@ function ArtistInfo({token}){
         .then(res => res.json())
         .then(data => setArtistConcerts(data.events))
     },[token, id, state])    
-    console.log(artistConcerts, 'Hello')
 
     return (
         <div className="container ">
@@ -54,7 +51,7 @@ function ArtistInfo({token}){
                 
                 <div id="artistDisc">
                     {artistAlbum.map(album => {
-                        return <img onClick= {() => {navigate(`/album/${album.id}`, {state: {album}})}} key={album.id} className='albums' src={album.images[1].url} alt="albums" />
+                        return <img onClick= {() => {navigate(`/album/${album.id}`, {state: {album}, id: state.id})}} key={album.id} className='albums' src={album.images[1].url} alt="albums" />
                     })}
                 </div>
                 <div  style={{textAlign: 'center', marginTop: '5px'}}>

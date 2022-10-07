@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {useParams, useLocation} from 'react-router-dom'
+import {useParams, useLocation, useNavigate} from 'react-router-dom'
 import { db } from "./firebase-config";
 import {
   collection,
@@ -17,6 +17,7 @@ function Tracks({ token, handleFavorites }) {
     const {id} = useParams()
     const location = useLocation();
     const state = location.state
+    console.log(state)
     // const usersCollectionRef = collection(db, "users");
 
     async function getTrack (e) {
@@ -94,7 +95,7 @@ function Tracks({ token, handleFavorites }) {
     </div>
 
     <div className='col-md-12'>
-      <a className='scrollBtn' style={{ marginLeft: '10px' }}>{`Go back to ${state.album.artists[0].name} albums`}</a>
+      <a className='scrollBtn'  style={{ marginLeft: '10px' }}>{`Go back to ${state.album.artists[0].name} albums`}</a>
     </div>
     <div className='col-md-12'>
       {/* <audio controls>
