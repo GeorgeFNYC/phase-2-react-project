@@ -15,7 +15,7 @@ function Welcome(){
     const[dbUser, setDbUser] = useState()
     const usersCollectionRef = collection(db, "users");
     const navigate = useNavigate()
-    const[hide, setHide] = useState(false);
+    const[hide, setHide] = useState(true);
     
     // const createUser = async() => {
     //     await addDoc(usersCollectionRef, { name: newName, password: newPassword });
@@ -37,9 +37,9 @@ function Welcome(){
         })
     }
 
-    // const handleSign = () => {
-    //     setHide(!hide)
-    // }
+        const handleHide = () => {
+            setHide(!hide)
+        }
 
     return(
         <div className='container-fluid'>
@@ -50,13 +50,15 @@ function Welcome(){
                     <form onSubmit={handleSubmit}>
                         <input onChange={(e) => {setUserName(e.target.value)}} name="username"className='loginHome' placeholder='Username' type="text" ></input>
                         <input onChange={(e) => {setPassword(e.target.value)}} name="password"className='loginHome'placeholder='Password' type="password" ></input>
-                        <input style = { {display: 'none'} }onChange={(e) => {setConfirmPassword(e.target.value)}} name="password"className='loginHome'placeholder='Confirm Password' type="password" ></input>
-                        <div className=' btnDiv col-md-6'>
-                            <button type="submit" className="button">Login</button>
+                        {hide ? <input onChange={(e) => {setConfirmPassword(e.target.value)}} name="password"className='loginHome'placeholder='Confirm Password' type="password" ></input> : null}
+                        <div className=' btnDiv col-md-5'>
+                            {hide ? <button type="submit" className="button">Sign Up</button> : <button type="submit" className="button">Login</button>}
                         </div>
-                        <div className='btnDiv col-md-6'>
-                            <button type="submit" className="button">Sign up</button>
-                        </div>
+                        {hide ? <div style={{ top: '35px', marginTop: '0px', height: '100px', position: 'relative'}}className='btnDiv col-md-7'>
+                            <p id='welcomeP'>Already have an account?</p>
+                            <a onClick = { handleHide } id='welcomeA'>Login</a>
+                        </div> : null}
+                        
                     </form>
                 </div>
             </div>

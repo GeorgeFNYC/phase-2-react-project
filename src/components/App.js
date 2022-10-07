@@ -39,6 +39,7 @@ function App() {
   }, [])
 
 
+
     // Search for artists and/or tracks - async function due to multiple fetches within function
   function searchArtists(e) {
     setSearchInput(e.target.value);
@@ -68,7 +69,7 @@ function App() {
     };
     fetch(`https://api.spotify.com/v1/recommendations?limit=8&market=US&seed_genres=${e.target.innerText}`, genreList)
     .then(res => res.json())
-    .then(data => console.log(data.tracks))
+    .then(data => console.log(data.tracks, 'hello'))
     navigate(`/genre/${e.target.innerText}`)
   }
 

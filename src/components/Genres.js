@@ -7,7 +7,6 @@ function Genres({token}){
     const navigate = useNavigate()
     const location = useLocation()
     const state = location.state
-
     useEffect(() => {
         if(!state){
             const artistsGenre = {

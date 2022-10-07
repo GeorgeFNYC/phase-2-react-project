@@ -14,6 +14,7 @@ function Home({token, handleClick}) {
         setGenre([...genre]);
     }
 
+
   return (
     <>
       <div className="container">
